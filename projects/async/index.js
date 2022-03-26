@@ -30,6 +30,7 @@
  */
 
 import './towns.html';
+import { loadAndSortTowns } from './functions';
 
 const homeworkContainer = document.querySelector('#app');
 
@@ -39,7 +40,9 @@ const homeworkContainer = document.querySelector('#app');
  Массив городов пожно получить отправив асинхронный запрос по адресу
  https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  */
-function loadTowns() {}
+function loadTowns() {
+  return loadAndSortTowns();
+}
 
 /*
  Функция должна проверять встречается ли подстрока chunk в строке full
@@ -52,7 +55,10 @@ function loadTowns() {}
    isMatching('Moscow', 'SCO') // true
    isMatching('Moscow', 'Moscov') // false
  */
-function isMatching(full, chunk) {}
+function isMatching(full, chunk) {
+  const chunkUpper = chunk.toUpperCase();
+  return full.toUpperCase().includes(chunkUpper);
+}
 
 /* Блок с надписью "Загрузка" */
 const loadingBlock = homeworkContainer.querySelector('#loading-block');
@@ -67,8 +73,49 @@ const filterInput = homeworkContainer.querySelector('#filter-input');
 /* Блок с результатами поиска */
 const filterResult = homeworkContainer.querySelector('#filter-result');
 
-retryButton.addEventListener('click', () => {});
+let towns = [];
 
-filterInput.addEventListener('input', function () {});
+retryButton.addEventListener('click', () => {
+  onLoadTowns();
+});
+
+filterInput.addEventListener('input', function () {
+  onSetFilter(this.value);
+});
+
+function onShowPage() {
+  loadingFailedBlock.style.visibility = 'hidden';
+  filterBlock.style.visibility = 'hidden';
+}
+
+async function onLoadTowns() {
+  try {
+    towns = await loadTowns();
+    loadingBlock.style.visibility = 'hidden';
+    loadingFailedBlock.style.visibility = 'hidden';
+    filterBlock.style.visibility = 'visible';
+  } catch (e) {
+    loadingBlock.style.visibility = 'hidden';
+    loadingFailedBlock.style.visibility = 'visible';
+  }
+}
+
+function onSetFilter(filter) {
+  filterResult.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+
+  for (const town of towns) {
+    if (filter && isMatching(town.name, filter)) {
+      const filterElement = document.createElement('DIV');
+      filterElement.textContent = town.name;
+      fragment.append(filterElement);
+    }
+  }
+  filterResult.append(fragment);
+}
+
+onShowPage();
+onLoadTowns();
 
 export { loadTowns, isMatching };

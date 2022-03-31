@@ -1,0 +1,122 @@
+﻿<meta charset="UTF-8">
+<style>
+    #app input {
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 5px 0;
+    }
+
+    #app table {
+        width: 100%;
+    }
+
+    #app table td,
+    #app table th {
+        padding: 5px;
+        text-align: left;
+    }
+
+    #app table td.value {
+        word-break: break-word;
+    }
+
+    #app tbody tr:nth-child(odd) {
+        background: #ddd;
+    }
+</style>
+
+<div id="app">
+    <div id="filter-block">
+        Поиск cookie: <input id="filter-name-input" placeholder="имя cookie" type="text">
+    </div>
+    <hr>
+    <div id="add-block">
+        Добавить cookie:<br>
+        <input id="add-name-input" placeholder="имя cookie" type="text"><br>
+        <input id="add-value-input" placeholder="значение cookie" type="text"><br>
+        <button id="add-button">добавить cookie</button>
+    </div>
+    <hr>
+    <div id="list-block">
+        Доступные cookie:
+        <table id="list-table">
+            <thead>
+            <tr>
+                <th>имя</th>
+                <th>значение</th>
+                <th>удалить</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- tr добавлять сюда -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    /*
+ ДЗ 7 - Создать редактор cookie с возможностью фильтрации
+
+ 7.1: На странице должна быть таблица со списком имеющихся cookie. Таблица должна иметь следующие столбцы:
+   - имя
+   - значение
+   - удалить (при нажатии на кнопку, выбранная cookie удаляется из браузера и таблицы)
+
+ 7.2: На странице должна быть форма для добавления новой cookie. Форма должна содержать следующие поля:
+   - имя
+   - значение
+   - добавить (при нажатии на кнопку, в браузер и таблицу добавляется новая cookie с указанным именем и значением)
+
+ Если добавляется cookie с именем уже существующей cookie, то ее значение в браузере и таблице должно быть обновлено
+
+ 7.3: На странице должно быть текстовое поле для фильтрации cookie
+ В таблице должны быть только те cookie, в имени или значении которых, хотя бы частично, есть введенное значение
+ Если в поле фильтра пусто, то должны выводиться все доступные cookie
+ Если добавляемая cookie не соответствует фильтру, то она должна быть добавлена только в браузер, но не в таблицу
+ Если добавляется cookie, с именем уже существующей cookie и ее новое значение не соответствует фильтру,
+ то ее значение должно быть обновлено в браузере, а из таблицы cookie должна быть удалена
+
+ Запрещено использовать сторонние библиотеки. Разрешено пользоваться только тем, что встроено в браузер
+ */
+
+    // import './cookie.html';
+
+    /*
+     app - это контейнер для всех ваших домашних заданий
+     Если вы создаете новые html-элементы и добавляете их на страницу, то добавляйте их только в этот контейнер
+    
+     Пример:
+       const newDiv = document.createElement('div');
+       homeworkContainer.appendChild(newDiv);
+     */
+    const homeworkContainer = document.querySelector('#app');
+    // текстовое поле для фильтрации cookie
+    const filterNameInput = homeworkContainer.querySelector('#filter-name-input');
+    // текстовое поле с именем cookie
+    const addNameInput = homeworkContainer.querySelector('#add-name-input');
+    // текстовое поле со значением cookie
+    const addValueInput = homeworkContainer.querySelector('#add-value-input');
+    // кнопка "добавить cookie"
+    const addButton = homeworkContainer.querySelector('#add-button');
+    // таблица со списком cookie
+    const listTable = homeworkContainer.querySelector('#list-table tbody');
+
+    filterNameInput.addEventListener('input', function () {});
+
+    addButton.addEventListener('click', () => {
+        let nameTh = document.createElement('th');
+        nameTh.textContent = addNameInput.value;
+        let valueTh = document.createElement('th');
+        valueTh.textContent = addValueInput.value;
+        let delBtn = document.createElement('button');
+        delBtn.textContent = 'Удалить';
+        let tableRow = document.createElement('tr');
+        tableRow.appendChild(nameTh);
+        tableRow.appendChild(valueTh);
+        tableRow.appendChild(delBtn);
+        listTable.lastChild.
+    });
+
+    listTable.addEventListener('click', (e) => {});
+</script>

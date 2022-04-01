@@ -105,18 +105,56 @@
     filterNameInput.addEventListener('input', function () {});
 
     addButton.addEventListener('click', () => {
-        let nameTh = document.createElement('th');
-        nameTh.textContent = addNameInput.value;
-        let valueTh = document.createElement('th');
-        valueTh.textContent = addValueInput.value;
-        let delBtn = document.createElement('button');
-        delBtn.textContent = 'Удалить';
-        let tableRow = document.createElement('tr');
-        tableRow.appendChild(nameTh);
-        tableRow.appendChild(valueTh);
-        tableRow.appendChild(delBtn);
-        listTable.lastChild.
+        document.cookie = `${addNameInput.value}=${addValueInput.value}`;
+        loadCookies();
     });
 
-    listTable.addEventListener('click', (e) => {});
+    listTable.addEventListener('click', (e) => {
+        
+    });
+       
+   function addTableRow(name, value) {
+       let newRow = listTable.insertRow(-1);
+       let newCell = newRow.insertCell();
+       let newText = document.createTextNode(name);
+       newCell.appendChild(newText);
+
+       newCell = newRow.insertCell();
+       newText = document.createTextNode(value);
+       newCell.appendChild(newText);
+
+       newCell = newRow.insertCell();
+       let newBtn = document.createElement('button');
+       newBtn.textContent = 'Удалить';
+       newBtn.addEventListener('click', (e) => {
+          deleteCookie(e.target.parentNode.previousSibling.previousSibling.textContent); 
+          let p = e.target.parentNode.parentNode;
+          p.parentNode.removeChild(p);
+       });
+       newCell.appendChild(newBtn);
+   }
+
+    function loadCookies() {
+      const cookies = [];
+       
+       let strArr = document.cookie.split('; ');
+       for (let i = 0; i < strArr.length; i++) {
+           const [name, value] = strArr[i].split('=');
+           cookies.push({name, value});
+       }
+        
+        clearTable() 
+        for (const cookie of cookies) {
+            addTableRow(cookie.name, cookie.value);
+        }
+    }
+    
+    function clearTable() {
+        while( listTable.rows.length > 0) listTable.deleteRow(0);
+    }
+    
+    function deleteCookie(name) {
+        document.cookie = name + "=;expires=" + new Date(0).toUTCString();
+    }
+    
 </script>

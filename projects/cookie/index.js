@@ -45,8 +45,63 @@ const addButton = homeworkContainer.querySelector('#add-button');
 // таблица со списком cookie
 const listTable = homeworkContainer.querySelector('#list-table tbody');
 
-filterNameInput.addEventListener('input', function () {});
+let filter = '';
 
-addButton.addEventListener('click', () => {});
+filterNameInput.addEventListener('input', function () {
+  filter = filterNameInput.value;
+  refreshTable();
+});
 
-listTable.addEventListener('click', (e) => {});
+addButton.addEventListener('click', () => {
+  document.cookie = `${addNameInput.value}=${addValueInput.value}`;
+  refreshTable();
+});
+
+listTable.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON') {
+    deleteCookie(e.target.parentNode.previousSibling.previousSibling.textContent);
+    const p = e.target.parentNode.parentNode;
+    p.parentNode.removeChild(p);
+  }
+});
+
+function addTableRow(name, value) {
+  const newRow = listTable.insertRow(-1);
+  let newCell = newRow.insertCell();
+  let newText = document.createTextNode(name);
+  newCell.appendChild(newText);
+
+  newCell = newRow.insertCell();
+  newText = document.createTextNode(value);
+  newCell.appendChild(newText);
+
+  newCell = newRow.insertCell();
+  const newBtn = document.createElement('button');
+  newBtn.textContent = 'Удалить';
+  newCell.appendChild(newBtn);
+}
+
+function refreshTable() {
+  const cookies = [];
+
+  const strArr = document.cookie.split('; ');
+  for (let i = 0; i < strArr.length; i++) {
+    const [name, value] = strArr[i].split('=');
+    cookies.push({ name, value });
+  }
+
+  while (listTable.rows.length > 0) listTable.deleteRow(0);
+
+  for (const cookie of cookies) {
+    if (
+      cookie.name.toUpperCase().includes(filter.toUpperCase()) ||
+      cookie.value.toUpperCase().includes(filter.toUpperCase())
+    ) {
+      addTableRow(cookie.name, cookie.value);
+    }
+  }
+}
+
+function deleteCookie(name) {
+  document.cookie = name + '=;expires=' + new Date(0).toUTCString();
+}

@@ -105,3 +105,5 @@ function refreshTable() {
 function deleteCookie(name) {
   document.cookie = name + '=;expires=' + new Date(0).toUTCString();
 }
+
+refreshTable();

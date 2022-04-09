@@ -134,7 +134,8 @@ ymaps
         .coordinates;
     });
 
-    window.localStorage.clear();
+    // очистка для теста
+    //window.localStorage.clear();
     renderMap();
 
     function openBalloon(htmlBalloon) {

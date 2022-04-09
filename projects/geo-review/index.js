@@ -63,6 +63,8 @@ ymaps
     });
 
     maps.domEvent.manager.group(document).add(['click'], function (event) {
+      const address = document.querySelector('#address');
+      setAddress(address, currentCoords);
       if (event.get('target').id === 'btnAdd') {
         const formFields = {
           name: document.querySelector('#fieldName'),
@@ -154,15 +156,19 @@ ymaps
     }
 
     //не получилось с адресом
-    /*
+
     function getAddress(coords) {
-        return new Promise((resolve, reject) => {
-              maps.geocode(coords)
-                  .then(response => resolve(response.geoObjects.get(0).getAddressLine()))
-                  .catch(e => reject(e));
-          });
-      }
-      */
+      return new Promise((resolve, reject) => {
+        maps
+          .geocode(coords)
+          .then((response) => resolve(response.geoObjects.get(0).getAddressLine()))
+          .catch((e) => reject(e));
+      });
+    }
+
+    async function setAddress(element, coords) {
+      element.textContent = await getAddress(coords);
+    }
 
     function getReviewsByCoords(coords) {
       const result = {

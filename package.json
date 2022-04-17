@@ -11,6 +11,7 @@
     "build:prod": "NODE_ENV=production webpack --progress --colors",
     "watch": "webpack-dev-server --progress --colors",
     "start": "npm run watch",
+    "server": "node ./projects/chat/server.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },

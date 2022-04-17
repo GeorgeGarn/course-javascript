@@ -1,6 +1,6 @@
 ##  Чтобы запустить проект:
-запустить сервер (server.js)
 
+$ npm run server
 $ npm run start
 
 http://localhost:8080/chat/

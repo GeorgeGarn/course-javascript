@@ -1,3 +1,11 @@
+##  Чтобы запустить проект:
+запустить сервер (server.js)
+
+$ npm run start
+
+http://localhost:8080/chat/
+
+
 ## Javascript Boilerplate
 
 Универсальная сборка для выполнения домашних заданий на курсе по Javascript

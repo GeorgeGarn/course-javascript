@@ -1,3 +1,14 @@
+##  Чтобы запустить проект:
+
+$ npm run server
+
+$ npm run start
+
+-запускать сервер и клиента в разных консолях
+
+http://localhost:8080/chat/
+
+
 ## Javascript Boilerplate
 
 Универсальная сборка для выполнения домашних заданий на курсе по Javascript
